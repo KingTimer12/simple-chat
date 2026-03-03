@@ -66,7 +66,7 @@ impl Service {
                             let Event(id, message) = Event::from(raw);
                             if id != addr {
                                 let formatted_msg = format!("[{}]: {}", id, message);
-                                reader.write(formatted_msg.as_bytes()).await.unwrap();
+                                reader.write_all(formatted_msg.as_bytes()).await.unwrap();
                             }
                         }
                         Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {

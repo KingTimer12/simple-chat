@@ -51,7 +51,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
             payload = rx.recv() => {
                 match payload {
-                    Some(msg) => { reader.write(msg.as_bytes()).await?; }
+                    Some(msg) => { reader.write_all(msg.as_bytes()).await?; }
                     None => break,
                 }
             }
