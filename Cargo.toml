@@ -1,0 +1,10 @@
+[workspace]
+resolver = "3"
+members = ["client","server"]
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde          = { version = "1.0.225", features = ["derive"] }
+serde_json     = "1.0.145"
+dashmap        = "6.1.0"
+local-ip-address = "0.6"
