@@ -72,18 +72,26 @@ jobs:
       - name: Build release
         run: cargo build -r --target ${{ matrix.target }}
 
+      # Renomeia com o target no nome para evitar colisão no release
+      - name: Rename binaries
+        shell: bash
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/client${{ matrix.ext }} dist/client-${{ matrix.target }}${{ matrix.ext }}
+          cp target/${{ matrix.target }}/release/server${{ matrix.ext }} dist/server-${{ matrix.target }}${{ matrix.ext }}
+
       - name: Upload client
         uses: actions/upload-artifact@v4
         with:
           name: client-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/client${{ matrix.ext }}
+          path: dist/client-${{ matrix.target }}${{ matrix.ext }}
           if-no-files-found: error
 
       - name: Upload server
         uses: actions/upload-artifact@v4
         with:
           name: server-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/server${{ matrix.ext }}
+          path: dist/server-${{ matrix.target }}${{ matrix.ext }}
           if-no-files-found: error
 
   release:
